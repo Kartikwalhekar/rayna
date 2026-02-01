@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Rayna 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    background: linear-gradient(135deg, #ff9ecf, #ffe6f0);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .card {
+    background: white;
+    padding: 35px 30px;
+    border-radius: 25px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    max-width: 380px;
+    z-index: 2;
+  }
+
+  h1 { color: #ff2f7d; }
+  p { color: #444; font-size: 17px; line-height: 1.5; }
+
+  input {
+    padding: 12px;
+    font-size: 16px;
+    width: 80%;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    margin-top: 15px;
+    outline: none;
+    text-align: center;
+  }
+
+  button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-size: 17px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+  }
+
+  #yes { background-color: #ff2f7d; color: white; }
+  #no { background-color: #ddd; position: absolute; color: black; }
+
+  .heart, .nazar {
+    position: absolute;
+    font-size: 22px;
+    pointer-events: none;
+  }
+
+  .heart { animation: floatUp 6s linear infinite; }
+  .nazar { animation: floatUp 6s linear infinite; }
+
+  @keyframes floatUp {
+    0% { transform: translateY(100vh); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PASSWORD LOCK SCREEN -->
+<div class="card" id="lockScreen">
+  <h1>🔒Private🔒</h1>
+  <p>Filled with love only for Rayna💕</p>
+  <input type="password" id="password" placeholder="Enter password">
+  <br>
+  <button onclick="checkPassword()">Unlock🔒💖</button>
+  <div class="error" id="error"></div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="mainContent" style="display:none;">
+  <audio id="song" src="ye-tune-kya-kiya.mp3.mpeg"></audio>
+
+  <div class="card">
+    <p>
+      Hello My Motu💖<br><br>
+      Ik I’m not very expressive and honestly   
+      I don’t always know the best way to show my love…  
+      but what I do know is how lucky I am 🥺 (Bass cry a little less🥲)<br><br>
+      Thank you for tolerating me, understanding me,  
+      and choosing me even on days when I’m difficult 😁<br><br>
+      <strong>Will you be my Valentine?💕</strong>
+    </p>
+
+    <button id="yes" onclick="yesClicked()">Yes 😍</button>
+    <button id="no" onmouseover="moveNo()">No☠️</button>
+  </div>
+</div>
+
+<script>
+const correctPassword = "ilovekartik";
+
+// PASSWORD FUNCTION
+function checkPassword() {
+  const input = document.getElementById("password").value;
+  if (input === correctPassword) {
+    document.getElementById("lockScreen").style.display = "none";
+    document.getElementById("mainContent").style.display = "block";
+  } else {
+    document.getElementById("error").innerText = "Wrong password 😜";
+  }
+}
+
+// NO BUTTON MOVES RANDOMLY
+function moveNo() {
+  const btn = document.getElementById("no");
+  btn.style.left = Math.random() * 60 + 20 + "vw";
+  btn.style.top = Math.random() * 60 + 20 + "vh";
+}
+
+// YES BUTTON CLICKED
+function yesClicked() {
+  const song = document.getElementById("song");
+  song.currentTime = 0;
+  song.play();
+
+  document.body.innerHTML = `
+    <div style="padding:40px; text-align:center; color:#ff2f7d;">
+      <h1>I knew you would say yes 😏😏</h1>
+      <p style="font-size:22px; line-height:1.5;">
+        I love you so much babydoll 🥹💖<br><br>
+        I honestly can’t tell you how much you mean to me,  
+        but every part of my heart knows this  
+        <strong>you are my only Valentine</strong>,  
+        and the only one I want for my entire life 🌎✨<br><br>
+        Thank you for being my Valentine, today and always 🥹💖<br><br>
+        <strong>I love you babezo! 😘🌍</strong>
+      </p>
+    </div>
+  `;
+
+  // emojis everywhere
+  for(let i=0; i<50; i++){
+    createHeart();
+    createNazar();
+  }
+}
+
+// floating hearts
+function createHeart() {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerHTML = "💖";
+  h.style.left = Math.random()*100 + "vw";
+  h.style.top = Math.random()*100 + "vh";
+  h.style.fontSize = (15 + Math.random()*25) + "px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(), 7000);
+}
+
+// floating nazar / 🧿
+function createNazar() {
+  const n = document.createElement("div");
+  n.className = "nazar";
+  n.innerHTML = "🧿";
+  n.style.left = Math.random()*100 + "vw";
+  n.style.top = Math.random()*100 + "vh";
+  n.style.fontSize = (15 + Math.random()*25) + "px";
+  document.body.appendChild(n);
+  setTimeout(()=>n.remove(), 7000);
+}
+
+// continuous soft hearts
+setInterval(createHeart, 500);
+</script>
+
+</body>
+</html>
