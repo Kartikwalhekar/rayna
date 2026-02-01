@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
   body {
-    background: linear-gradient(135deg, #ff9ecf, #ffe6f0);
     font-family: Arial, sans-serif;
     margin: 0;
     height: 100vh;
@@ -15,10 +14,19 @@
     justify-content: center;
     text-align: center;
     overflow: hidden;
+    background: linear-gradient(135deg, #ff9ecf, #ffe6f0, #ffd6e8, #fff0f5);
+    background-size: 400% 400%;
+    animation: gradientMove 20s ease infinite;
+  }
+
+  @keyframes gradientMove {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
   }
 
   .card {
-    background: white;
+    background: rgba(255,255,255,0.95);
     padding: 35px 30px;
     border-radius: 25px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.15);
@@ -66,37 +74,52 @@
     20% { opacity: 1; }
     100% { transform: translateY(-10vh); opacity: 0; }
   }
+
+  /* optional floating sparkles */
+  .sparkle {
+    position: absolute;
+    background: rgba(255,255,255,0.7);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: sparkleMove 6s linear infinite;
+  }
+
+  @keyframes sparkleMove {
+    0% {transform: translateY(100vh) scale(0);}
+    50% {transform: translateY(50vh) scale(1);}
+    100% {transform: translateY(-10vh) scale(0);}
+  }
 </style>
 </head>
 <body>
 
 <!-- PASSWORD LOCK SCREEN -->
 <div class="card" id="lockScreen">
-  <h1>🔒Private🔒</h1>
-  <p>Filled with love only for Rayna💕</p>
+  <h1>🔒 Private 🔒</h1>
+  <p>Filled with love only for Rayna 💕</p>
   <input type="password" id="password" placeholder="Enter password">
   <br>
-  <button onclick="checkPassword()">Unlock🔒💖</button>
+  <button onclick="checkPassword()">Unlock 💖</button>
   <div class="error" id="error"></div>
 </div>
 
 <!-- MAIN CONTENT -->
 <div id="mainContent" style="display:none;">
-  <audio id="song" src="ye-tune-kya-kiya.mp3.mpeg"></audio>
+  <audio id="song" src="ye-tune-kya-kiya.mpeg"></audio>
 
   <div class="card">
     <p>
-      Hello My Motu💖<br><br>
+      Hello My Motu 💖<br><br>
       Ik I’m not very expressive and honestly   
       I don’t always know the best way to show my love…  
-      but what I do know is how lucky I am 🥺 (Bass cry a little less🥲)<br><br>
+      but what I do know is how lucky I am 🥺 (Bass cry a little less 🥲)<br><br>
       Thank you for tolerating me, understanding me,  
       and choosing me even on days when I’m difficult 😁<br><br>
-      <strong>Will you be my Valentine?💕</strong>
+      <strong>Will you be my Valentine? 💕</strong>
     </p>
 
     <button id="yes" onclick="yesClicked()">Yes 😍</button>
-    <button id="no" onmouseover="moveNo()">No☠️</button>
+    <button id="no" onmouseover="moveNo()">No ☠️</button>
   </div>
 </div>
 
@@ -125,7 +148,13 @@ function moveNo() {
 function yesClicked() {
   const song = document.getElementById("song");
   song.currentTime = 0;
-  song.play();
+
+  // Wait a tiny bit after DOM update, then play
+  setTimeout(() => {
+    song.play().catch(() => {
+      console.log("Autoplay blocked, click again to start the song.");
+    });
+  }, 50);
 
   document.body.innerHTML = `
     <div style="padding:40px; text-align:center; color:#ff2f7d;">
@@ -133,7 +162,7 @@ function yesClicked() {
       <p style="font-size:22px; line-height:1.5;">
         I love you so much babydoll 🥹💖<br><br>
         I honestly can’t tell you how much you mean to me,  
-        but every part of my heart knows this  
+        but every part of my heart knows this —  
         <strong>you are my only Valentine</strong>,  
         and the only one I want for my entire life 🌎✨<br><br>
         Thank you for being my Valentine, today and always 🥹💖<br><br>
@@ -175,6 +204,18 @@ function createNazar() {
 
 // continuous soft hearts
 setInterval(createHeart, 500);
+
+// floating sparkles
+function createSparkle() {
+  const s = document.createElement("div");
+  s.className = "sparkle";
+  s.style.left = Math.random() * 100 + "vw";
+  const size = 3 + Math.random() * 4;
+  s.style.width = s.style.height = size + "px";
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(), 6000);
+}
+setInterval(createSparkle, 400);
 </script>
 
 </body>
